@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="uft-8">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link src="css/bootstrap.min.js">
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	
+  	<link rel="stylesheet" href="http://www.w3ii.com/lib/w3.css">
+	<script src="js/decode.js"></script>
+
+    <title>Noticias</title>
+
+    <script>
+
+ 		
+
+ 		var output = $.ajax({
+		    url: 'http://localhost:3001/api/noticia', // The URL to the API. You can get this by clicking on "Show CURL example" from an API profile
+		    type: 'GET', // The HTTP Method, can be GET POST PUT DELETE etc
+		    data: {}, // Additional parameters here
+		    dataType: 'json',
+	    	success: function(data) {
+		    	//
+		        //Change data.source to data.something , where something is whichever part of the object you want returned.
+		        //To see the whole object you can output it to your browser console using:
+		        console.log(data);
+	       		for(var i = 0; i < data.noticias.length; i++){
+
+       				var $myNewElement = $(`<li><a href="#">${data.noticias[i].Tipo}</a></li>`);
+					$myNewElement.appendTo(".dropdown-menu");
+	       		}
+
+
+		       	for(var i = 0; i < data.noticias.length; i++)
+      		{	
+      			//---------------------------------------
+      			//ENCABEZADO NOTICIAS
+      			let encabezado0 = document.createTextNode("Noticia: "+ i)
+      			//crea la etiqueta <h1>
+      			let h = document.createElement('h1')
+      			$(h).css({ 'fontSize' : '50px', 'color' : 'blue' });
+      			$(h).css({'background-color ' : 'blue'});
+      			//$(h).animate({marginBottom:"150px"},3000);
+      			$(h).animate({marginLeft:"100px"},1500);
+      			//agrega el encabezado a la etiquta
+      			h.append(encabezado0)
+      			
+      			//agrega la etiqueta al body
+		       	document.body.appendChild(h)
+
+		       	
+		       	//---------------------------------------
+		       	//TITULO
+		       	let div = document.createElement('div');
+	       		div.setAttribute("class","w3-card-8");
+
+	       		let header = document.createElement('header');
+	       		header.setAttribute("class","w3-container w3-blue");
+
+	       		let H1 = document.createElement('h1');
+	       		H1.append("Titulo: "+data.noticias[i].Titulo)
+	       		header.append(H1)
+
+	       		let sinopsis = document.createElement('div');
+	       		sinopsis.setAttribute("class","w3-container")
+
+	       		let psin = document.createElement('p');
+	       		psin.append(data.noticias[i].Sintesis)
+	       		sinopsis.append(psin)
+
+	       		let conteiner = document.createElement('div');
+	       		conteiner.setAttribute("class","w3-container")
+
+	       		let p = document.createElement('p');
+	       		p.append(data.noticias[i].Cuerpo)
+	       		conteiner.append(p)
+
+	       		let conteinerimg = document.createElement('div');
+	       		conteinerimg.setAttribute("class","w3-container")
+
+	       		var image = new Image();
+      			image.src = `data:image/png;base64,${data.noticias[i].Imagen}`;
+
+      			imaage.width: 239px;
+  				image.height: 59px;
+
+	       		let pimg = document.createElement('p');	       		
+				pimg.append(image)
+	       		conteinerimg.append(pimg)
+
+	       		let footer = document.createElement('footer');
+	       		footer.setAttribute("class","w3-container w3-orange")
+
+	       		let H2 = document.createElement('h5');
+	       		H2.append("Cedula Reportero: "+data.noticias[i].ReporteroCI)
+	       		footer.append(H2)
+
+	       		div.append(header)//titulo
+				div.append(sinopsis)
+	       		div.append(p)//cuerpo
+	       		div.append(pimg)//imagen
+	       		div.append(footer)//cedula
+	       		document.body.appendChild(div)
+
+	       		/*
+
+		       	//cre la etiqueta <p> de el cuerpo
+		       	let listap = document.createElement('p')
+		       	//crea el text node que se añade al cuerpo
+      			let titulo = document.createTextNode("Titulo: "+data.noticias[i].Titulo)
+      			
+      			//crea una etiqueta <l1>
+      			let listal = document.createElement('li')
+      			//añade el titulo a la etiqueta <l1>
+      			listal.appendChild(titulo)
+      			//añade la etiqueta <l1> a la etiqueta cuerpo <p>
+      			listap.appendChild(listal)
+      			document.body.appendChild(listap)
+
+      			//-------------------------------------------------------------
+      			//IMAGENES
+      			var image = new Image();
+      			image.src = `data:image/png;base64,${data.noticias[i].Imagen}`;
+				document.body.appendChild(image)
+
+      			//-------------------------------------
+  				//TIPOS
+		       	//crea el text node que se añade al cuerpo
+      			let tipo = document.createTextNode("Tipo: " + data.noticias[i].Tipo)
+      			let tipop = document.createElement('p')
+      			let tipol = document.createElement('li')
+      			tipol.appendChild(tipo)
+      			tipop.appendChild(tipol)
+      			document.body.appendChild(tipop)
+
+      			//-----------------------------------------
+      			let sintesis = document.createTextNode("Sintesis: " + data.noticias[i].Sintesis)
+      			let sintesisp = document.createElement('p')
+      			let sintesisl = document.createElement('li')
+      			sintesisl.appendChild(sintesis)
+      			sintesisp.appendChild(sintesisl)
+      			document.body.appendChild(sintesisp)
+
+      			//-----------------------------------------
+      			let cuerpo = document.createTextNode("Cuerpo: " + data.noticias[i].Cuerpo)
+      			let cuerpop = document.createElement('p')
+      			let cuerpol = document.createElement('li')
+      			cuerpol.appendChild(cuerpo)
+      			cuerpop.appendChild(cuerpol)
+      			document.body.appendChild(cuerpop)
+
+      			let report = document.createTextNode("Reportero CI: " + data.noticias[i].ReporteroCI)
+      			let reportp = document.createElement('p')
+      			let reportl = document.createElement('li')
+      			reportl.appendChild(report)
+      			reportp.appendChild(reportl)
+      			document.body.appendChild(reportp)
+
+      			$('p').css('fontSize', '20px')
+      			$('li').animate({marginLeft:"50px"},1500);
+      			*/
+      			$('p').css('fontSize', '20px')
+      			$(H2).animate({marginLeft:"50px"},1500);
+      			$(H1).animate({marginLeft:"25px"},1500);
+      		}
+
+    			
+		       	
+		       	
+	        },
+		    error: function(err) { alert(err); },
+		    
+		    beforeSend: function(xhr) {
+		    xhr.setRequestHeader("X-Mashape-Authorization", "YOUR_API_KEY"); // Enter here your Mashape key
+	    	}
+
+
+
+
+		});
+  	
+
+</script>
+</head>
+<body>
+	<div class="center-block quitar-float text-center">
+		<img src="imgs/front.jpg" style="width:1200px;height: 280px;">
+
+	</div>
+
+	
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="http://localhost:3001/">NotiUneg</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li class="active"><a href="#">Todas las noticias</a></li>
+	      <li class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categoria
+	        <span class="caret"></span></a>
+	        
+	        <ul class="dropdown-menu">
+	          <li><a href="#">Page 1-1</a></li>
+	          <li><a href="#">Page 1-2</a></li>
+	          <li><a href="#">Page 1-3</a></li>
+	        </ul>
+	      </li>
+	      <li><a href="#">Page 2</a></li>
+	      <li><a href="#">Page 3</a></li>
+	    </ul>
+	  </div>
+	</nav>
+
+
+	<div class="col-md-6 center-block quitar-float text-center espacio-arriba">
+		
+		<h1>Noti Uneg</h1>
+	</div>
+    
+
+	
+  	
+
+
+
+</body>
+</html>

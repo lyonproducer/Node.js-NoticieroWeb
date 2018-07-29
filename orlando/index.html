@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html ng-app="MainApp">
+<head>
+  <title></title>
+  <!-- Cargamos angular -->
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Cargamos el javascript de angular -->
+  <script src="core.js"></script>
+</head>
+<body ng-controller="mainController">
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <!-- SideNav -->
+  <ul id="slide-out" class="side-nav">
+    <li><div class="user-view">
+      <div class="background">
+        <img src="">
+      </div>
+      <a href="#!user"><img class="circle" src=""></a>
+      <a href="#!name"><span class="white-text name">John Doe</span></a>
+      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!" onclick="cerrar()">Third Link With Waves</a></li>
+  </ul>
+  <a href="#" data-activates="slide-out" class="button-collapse hide" id="espacio"><i class="material-icons">menu</i></a>
+  <!-- NavBar -->
+  <nav>
+    <div class="nav-wrapper purple darken-3">
+      <a href="#!" class="brand-logo center"><i class="material-icons left">web</i>NewsPapper</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a onclick="abrir()">Clasificaciones<i class="material-icons right">menu</i></a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- Tabla -->
+  <table class="table table-striped">
+    <tr class="info">
+        <td>Nombre</td>
+        <td>Apellidos</td>
+        <td>Edad</td>
+    </tr>
+    <tr ng-repeat="noticia in noticias">
+        <td>{{ noticia.picture }}</td>
+        <td>{{ noticia.name}}</td>
+        <td>{{ noticia.price }}</td> 
+    </tr>
+  </table>
+  <!-- Tarjeta -->
+  <div class="row">
+        <div class="col s12 m7">
+          <div class="card">
+            <div class="card-image">
+              <img src="">
+              <span class="card-title">Card Title</span>
+            </div>
+            <div class="card-content">
+              <p>I am a very simple card. I am good at containing small bits of information.
+              I am convenient because I require little markup to use effectively.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">This is a link</a>
+            </div>
+          </div>
+        </div>
+      </div>
+  <script type="text/javascript">
+    $(".button-collapse").sideNav();
+    function abrir() {
+      $(".button-collapse").sideNav('show');
+    }
+    function cerrar() {
+      $(".button-collapse").sideNav('hide');
+    }
+  </script>
+</body>
+</html>
